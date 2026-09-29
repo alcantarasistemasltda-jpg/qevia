@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QEVIA — Clareza para sua vida financeira
 
-## Getting Started
+O **QEVIA** é uma plataforma moderna e completa de gestão financeira pessoal e empresarial leve, focada em clareza, previsibilidade e usabilidade excepcional.
 
-First, run the development server:
+---
 
+## 🚀 Módulos e Recursos
+
+- **Dashboard Executivo:** Visão unificada de saldo disponível, saldo projetado, resumo mensal de receitas vs despesas, gráficos de evolução e indicadores de saúde financeira.
+- **Extrato & Lançamentos:** Gestão completa de transações (receitas, despesas, transferências e pagamentos de fatura), compras parceladas e filtros rápidos com chips visuais interativos.
+- **Contas & Carteiras:** Acompanhamento de saldos em tempo real por instituição, contas digitais, poupanças e investimentos.
+- **Cartões & Faturas:** Controle de limites utilizados/disponíveis, fechamento e vencimento de faturas com detalhamento de itens.
+- **Planejamento & Metas:** Orçamentos mensais inteligentes por categoria com cálculo automático de consumo e limites.
+- **Compromissos Financeiros:** Controle preciso de contas a pagar e a receber com timeline, status de liquidação e sem duplicação contábil.
+- **Central de Alertas Financeiros:** Motor automático de avaliação de vencimentos próximos (`BILL_DUE`), estouro de orçamento (`BUDGET_LIMIT`), saldo baixo (`LOW_BALANCE`) e faturas.
+- **Relatórios & Análises:** Análise factual por período, fluxo de caixa, evolução de patrimônio líquido e distribuição por categoria.
+- **Privacidade Instantânea:** Modo de ocultação de valores (`useHideValues`) presente em todo o sistema.
+
+---
+
+## 🛠️ Stack Tecnológica
+
+- **Frontend:** Next.js (App Router), React 19, TypeScript, Tailwind CSS
+- **Backend & Auth:** Supabase (PostgreSQL, RLS, Auth)
+- **Ícones:** Lucide Icons
+- **Design System:** Dark Mode / Light Mode nativo, Mobile-First (360px a 1440px+)
+
+---
+
+## 💻 Como Rodar o Projeto
+
+1. Clone o repositório:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/alcantarasistemasltda-jpg/qevia.git
+cd qevia
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configure as variáveis de ambiente em `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=seu_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_supabase_anon_key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Execute o servidor de desenvolvimento:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Acesse no navegador:
+[http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📜 Licença
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Propriedade de Alcântara Sistemas LTDA. Todos os direitos reservados.
