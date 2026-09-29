@@ -79,6 +79,11 @@ export function DesktopSidebar() {
       title: "Sistema",
       items: [
         {
+          title: "Minha Assinatura",
+          href: "/app/assinatura",
+          icon: Sparkles,
+        },
+        {
           title: "Configurações",
           href: "/app/configuracoes",
           icon: Settings,

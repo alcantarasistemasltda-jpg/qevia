@@ -15,6 +15,7 @@ export const ROUTES = {
     login: "/login",
     register: "/register",
     forgotPassword: "/recuperar-senha",
+    completeProfile: "/completar-cadastro",
   },
   settings: "/configuracoes",
 } as const;

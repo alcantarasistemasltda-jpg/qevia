@@ -37,7 +37,45 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Refresh auth token if expired
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const pathname = request.nextUrl.pathname;
+  const isAppRoute = pathname.startsWith("/app");
+  const isCompleteProfileRoute = pathname === "/completar-cadastro";
+
+  // 1. Unauthenticated user trying to access /app/* -> redirect to /login
+  if (!user && isAppRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  // 2. Authenticated user flow on /app/* or /completar-cadastro
+  if (user && (isAppRoute || isCompleteProfileRoute)) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("is_profile_complete")
+      .eq("id", user.id)
+      .single();
+
+    const isComplete = profile?.is_profile_complete === true;
+
+    // Incomplete profile trying to access /app/* -> redirect to /completar-cadastro
+    if (!isComplete && isAppRoute) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/completar-cadastro";
+      return NextResponse.redirect(url);
+    }
+
+    // Complete profile trying to access /completar-cadastro -> redirect to /app
+    if (isComplete && isCompleteProfileRoute) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/app";
+      return NextResponse.redirect(url);
+    }
+  }
 
   return supabaseResponse;
 }

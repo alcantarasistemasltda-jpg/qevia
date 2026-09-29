@@ -15,6 +15,7 @@ import {
   CalendarClock,
   BarChart3,
   BellRing,
+  Sparkles,
   X,
   ChevronRight,
 } from "lucide-react";
@@ -80,6 +81,13 @@ export function MobileNav() {
       href: "/app/alertas",
       icon: BellRing,
       color: "text-rose-500 bg-rose-500/10",
+    },
+    {
+      title: "Minha Assinatura",
+      description: "Plano, faturas e cobranças",
+      href: "/app/assinatura",
+      icon: Sparkles,
+      color: "text-amber-500 bg-amber-500/10",
     },
     {
       title: "Configurações",

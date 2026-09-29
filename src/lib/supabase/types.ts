@@ -44,6 +44,14 @@ export type AlertType =
 
 export type AlertSeverity = "INFO" | "WARNING" | "CRITICAL";
 
+export type SubscriptionStatus =
+  | "TRIAL"
+  | "ACTIVE"
+  | "PENDING_PAYMENT"
+  | "OVERDUE"
+  | "CANCELLED"
+  | "EXPIRED";
+
 export interface Database {
   public: {
     Tables: {
@@ -54,6 +62,10 @@ export interface Database {
           full_name: string | null;
           avatar_url: string | null;
           currency: string;
+          document: string | null;
+          phone: string | null;
+          is_profile_complete: boolean;
+          asaas_customer_id: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -63,6 +75,10 @@ export interface Database {
           full_name?: string | null;
           avatar_url?: string | null;
           currency?: string;
+          document?: string | null;
+          phone?: string | null;
+          is_profile_complete?: boolean;
+          asaas_customer_id?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -72,6 +88,10 @@ export interface Database {
           full_name?: string | null;
           avatar_url?: string | null;
           currency?: string;
+          document?: string | null;
+          phone?: string | null;
+          is_profile_complete?: boolean;
+          asaas_customer_id?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -84,6 +104,98 @@ export interface Database {
             referencedColumns: ["id"];
           },
         ];
+      };
+      subscriptions: {
+        Row: {
+          id: string;
+          user_id: string;
+          asaas_customer_id: string | null;
+          asaas_subscription_id: string | null;
+          plan: string;
+          status: SubscriptionStatus;
+          trial_start_at: string | null;
+          trial_end_at: string | null;
+          current_period_start: string | null;
+          current_period_end: string | null;
+          cancelled_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          asaas_customer_id?: string | null;
+          asaas_subscription_id?: string | null;
+          plan?: string;
+          status?: SubscriptionStatus;
+          trial_start_at?: string | null;
+          trial_end_at?: string | null;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          cancelled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          asaas_customer_id?: string | null;
+          asaas_subscription_id?: string | null;
+          plan?: string;
+          status?: SubscriptionStatus;
+          trial_start_at?: string | null;
+          trial_end_at?: string | null;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          cancelled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      webhook_events: {
+        Row: {
+          id: string;
+          event_id: string;
+          event_type: string;
+          provider: string;
+          processed: boolean;
+          processed_at: string | null;
+          error_message: string | null;
+          payload: Json;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          event_id: string;
+          event_type: string;
+          provider?: string;
+          processed?: boolean;
+          processed_at?: string | null;
+          error_message?: string | null;
+          payload: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          event_id?: string;
+          event_type?: string;
+          provider?: string;
+          processed?: boolean;
+          processed_at?: string | null;
+          error_message?: string | null;
+          payload?: Json;
+          created_at?: string;
+        };
+        Relationships: [];
       };
       accounts: {
         Row: {

@@ -14,6 +14,7 @@ import { AuthService } from "@/services/auth.service";
 
 interface AuthContextType extends AuthState {
   signIn: (credentials: LoginCredentials) => Promise<AuthResponse<unknown>>;
+  signInWithGoogle: () => Promise<AuthResponse<{ url: string | null }>>;
   signUp: (credentials: RegisterCredentials) => Promise<AuthResponse<unknown>>;
   signOut: () => Promise<AuthResponse<void>>;
   resetPassword: (credentials: ResetPasswordCredentials) => Promise<AuthResponse<void>>;
@@ -93,6 +94,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         await refreshSession();
       }
       return res;
+    },
+    signInWithGoogle: async () => {
+      return await AuthService.signInWithGoogle();
     },
     signUp: async (credentials) => {
       return await AuthService.signUp(credentials);

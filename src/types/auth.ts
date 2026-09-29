@@ -5,6 +5,12 @@ export interface UserProfile {
   email: string;
   fullName?: string;
   avatarUrl?: string;
+  document?: string | null;
+  phone?: string | null;
+  isProfileComplete?: boolean;
+  is_profile_complete?: boolean;
+  asaasCustomerId?: string | null;
+  asaas_customer_id?: string | null;
   createdAt: string;
 }
 
@@ -34,6 +40,13 @@ export interface ResetPasswordCredentials {
   email: string;
 }
 
+export interface UpdateUserProfileDTO {
+  fullName?: string;
+  document?: string | null;
+  phone?: string | null;
+  isProfileComplete?: boolean;
+}
+
 export interface AuthResponse<T = unknown> {
   data: T | null;
   error: {
@@ -41,3 +54,4 @@ export interface AuthResponse<T = unknown> {
     code?: string;
   } | null;
 }
+

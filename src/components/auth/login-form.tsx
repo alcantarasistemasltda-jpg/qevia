@@ -7,7 +7,9 @@ import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
+import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { useAuth } from "@/hooks/use-auth";
+import { AuthService } from "@/services/auth.service";
 import { ROUTES } from "@/utils/constants";
 
 export function LoginForm() {
@@ -36,7 +38,12 @@ export function LoginForm() {
       if (response.error) {
         setErrorMessage(response.error.message || "E-mail ou senha incorretos.");
       } else {
-        router.push(ROUTES.app);
+        const profileRes = await AuthService.getProfile();
+        if (profileRes.data && !profileRes.data.isProfileComplete && !profileRes.data.is_profile_complete) {
+          router.push(ROUTES.auth.completeProfile);
+        } else {
+          router.push(ROUTES.app);
+        }
       }
     } catch {
       setErrorMessage("Ocorreu um erro ao tentar entrar. Tente novamente.");
@@ -46,69 +53,84 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="space-y-4">
       {errorMessage && (
         <Alert variant="danger" onClose={() => setErrorMessage(null)}>
           {errorMessage}
         </Alert>
       )}
 
-      <Input
-        label="E-mail"
-        type="email"
-        autoComplete="email"
-        placeholder="seu@email.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        leftIcon={<Mail className="w-4 h-4" />}
-        required
+      <GoogleAuthButton
+        label="Continuar com Google"
+        onError={(msg) => setErrorMessage(msg)}
+        disabled={isLoading}
       />
 
-      <div className="space-y-1">
-        <Input
-          label="Senha"
-          type={showPassword ? "text" : "password"}
-          autoComplete="current-password"
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          leftIcon={<Lock className="w-4 h-4" />}
-          rightIcon={
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword ? "Ocultar senha" : "Ver senha"}
-              className="p-1 hover:text-slate-700 dark:hover:text-slate-200 focus:outline-none"
-            >
-              {showPassword ? (
-                <EyeOff className="w-4 h-4" />
-              ) : (
-                <Eye className="w-4 h-4" />
-              )}
-            </button>
-          }
-          required
-        />
-        <div className="flex justify-end pt-1">
-          <Link
-            href={ROUTES.auth.forgotPassword}
-            className="text-xs text-teal-600 dark:text-teal-400 hover:underline font-medium"
-          >
-            Esqueceu a senha?
-          </Link>
-        </div>
+      <div className="relative flex items-center justify-center my-4">
+        <div className="border-t border-slate-200 dark:border-slate-800 w-full" />
+        <span className="bg-white dark:bg-slate-900 px-3 text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider absolute">
+          ou
+        </span>
       </div>
 
-      <Button
-        type="submit"
-        variant="gradient"
-        size="lg"
-        className="w-full mt-2"
-        isLoading={isLoading}
-        rightIcon={<ArrowRight className="w-4 h-4" />}
-      >
-        Acessar Conta
-      </Button>
-    </form>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input
+          label="E-mail"
+          type="email"
+          autoComplete="email"
+          placeholder="seu@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          leftIcon={<Mail className="w-4 h-4" />}
+          required
+        />
+
+        <div className="space-y-1">
+          <Input
+            label="Senha"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            leftIcon={<Lock className="w-4 h-4" />}
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Ocultar senha" : "Ver senha"}
+                className="p-1 hover:text-slate-700 dark:hover:text-slate-200 focus:outline-none"
+              >
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4" />
+                ) : (
+                  <Eye className="w-4 h-4" />
+                )}
+              </button>
+            }
+            required
+          />
+          <div className="flex justify-end pt-1">
+            <Link
+              href={ROUTES.auth.forgotPassword}
+              className="text-xs text-teal-600 dark:text-teal-400 hover:underline font-medium"
+            >
+              Esqueceu a senha?
+            </Link>
+          </div>
+        </div>
+
+        <Button
+          type="submit"
+          variant="gradient"
+          size="lg"
+          className="w-full mt-2"
+          isLoading={isLoading}
+          rightIcon={<ArrowRight className="w-4 h-4" />}
+        >
+          Acessar Conta
+        </Button>
+      </form>
+    </div>
   );
 }
