@@ -313,7 +313,7 @@ export function CommitmentDetailModal({
                   )}
                 >
                   {isReceivable ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownLeft className="w-3.5 h-3.5" />}
-                  <span>{isReceivable ? "Receber agora" : "Pagar agora"}</span>
+                  <span>{isReceivable ? "Registrar Recebimento" : "Registrar Pagamento"}</span>
                 </Button>
               )}
 

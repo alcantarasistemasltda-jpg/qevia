@@ -192,12 +192,12 @@ export function CommitmentCard({
             {isReceivable ? (
               <>
                 <ArrowUpRight className="w-3.5 h-3.5" />
-                <span>Receber</span>
+                <span>Registrar Recebimento</span>
               </>
             ) : (
               <>
                 <ArrowDownLeft className="w-3.5 h-3.5" />
-                <span>Pagar</span>
+                <span>Registrar Pagamento</span>
               </>
             )}
           </button>

@@ -31,6 +31,9 @@ import { CreditCardService } from "@/services/credit-card.service";
 import { TransactionService } from "@/services/transaction.service";
 import { TransferService } from "@/services/transfer.service";
 import { InstallmentService } from "@/services/installment.service";
+import { CommitmentService, type EnrichedCommitment } from "@/services/commitment.service";
+import { SettleCommitmentModal } from "@/components/commitments/settle-commitment-modal";
+import { Sparkles } from "lucide-react";
 
 import type { Account, Category, CreditCard } from "@/types/finance";
 import type { EnrichedTransaction } from "@/services/transaction.service";
@@ -103,8 +106,13 @@ function NewTransactionInner({
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [creditCards, setCreditCards] = useState<CreditCard[]>([]);
+  const [pendingCommitments, setPendingCommitments] = useState<EnrichedCommitment[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Commitment Suggestion & Settle Submodal State
+  const [dismissedSuggestions, setDismissedSuggestions] = useState(false);
+  const [selectedCommitmentToSettle, setSelectedCommitmentToSettle] = useState<EnrichedCommitment | null>(null);
 
   // Field Validation Errors
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -122,15 +130,17 @@ function NewTransactionInner({
     setNotes("");
     setErrors({});
     setDate(new Date().toISOString().split("T")[0]);
+    setDismissedSuggestions(false);
   }, []);
 
   const fetchDependencies = useCallback(async () => {
     if (!user) return;
     try {
-      const [accRes, catRes, cardRes] = await Promise.all([
+      const [accRes, catRes, cardRes, comRes] = await Promise.all([
         AccountService.list(),
         CategoryService.list(),
         CreditCardService.list(),
+        CommitmentService.listEnriched({ status: "PENDING" }),
       ]);
 
       if (accRes.data) {
@@ -145,6 +155,10 @@ function NewTransactionInner({
       if (cardRes.data) {
         setCreditCards(cardRes.data);
         setCreditCardId((prev) => prev || (cardRes.data && cardRes.data.length > 0 ? cardRes.data[0].id : null));
+      }
+
+      if (comRes.data) {
+        setPendingCommitments(comRes.data.filter((c) => c.status === "PENDING" && !c.transaction_id));
       }
     } finally {
       setIsLoadingData(false);
@@ -351,9 +365,12 @@ function NewTransactionInner({
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 pt-4 pb-2 shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-extrabold text-slate-900 dark:text-slate-100">
+          <div>
+            <span className="text-sm font-extrabold text-slate-900 dark:text-slate-100 block">
               {mode === "EDIT" ? "Editar Lançamento" : "Novo Lançamento"}
+            </span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              {mode === "EDIT" ? "Atualize os detalhes da movimentação realizada." : "Registre uma entrada ou saída que já aconteceu."}
             </span>
           </div>
 
@@ -400,10 +417,104 @@ function NewTransactionInner({
                 : "Ex: Reserva de emergência, Envio para poupança"
             }
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              setDismissedSuggestions(false);
+            }}
             error={errors.description}
             required
           />
+
+          {/* Discreet Smart Commitment Suggestion (Prevents Duplication) */}
+          {mode === "CREATE" && !dismissedSuggestions && flowType !== "TRANSFER" && (amount > 0 || description.trim().length > 1) && (() => {
+            const targetType = flowType === "EXPENSE" ? "PAYABLE" : "RECEIVABLE";
+            const candidateList = pendingCommitments.filter((c) => {
+              if (c.type !== targetType) return false;
+              if (c.status !== "PENDING" || c.transaction_id) return false;
+
+              let score = 0;
+              // 1. Amount match (exact or close)
+              if (amount > 0) {
+                const diff = Math.abs(c.amount - amount);
+                if (diff === 0) score += 5;
+                else if (diff / c.amount <= 0.05) score += 3;
+              }
+
+              // 2. Description/Title string match
+              if (description.trim().length > 1) {
+                const descWords = description.toLowerCase().trim().split(/\s+/);
+                const titleWords = c.title.toLowerCase().trim().split(/\s+/);
+                const hasOverlap = descWords.some((w) => w.length > 2 && c.title.toLowerCase().includes(w)) ||
+                                   titleWords.some((w) => w.length > 2 && description.toLowerCase().includes(w));
+                if (hasOverlap) score += 4;
+              }
+
+              // 3. Category match
+              if (categoryId && c.category_id === categoryId) {
+                score += 2;
+              }
+
+              return score >= 3;
+            }).slice(0, 3);
+
+            if (candidateList.length === 0) return null;
+
+            return (
+              <div className="p-3.5 rounded-2xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200/70 dark:border-teal-900/50 space-y-2.5 animate-in fade-in-50 duration-150">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-teal-900 dark:text-teal-200 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
+                    <span>Existe um compromisso que pode ser esta movimentação:</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setDismissedSuggestions(true)}
+                    className="text-[11px] font-semibold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 underline"
+                  >
+                    Ignorar
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {candidateList.map((cand) => (
+                    <div
+                      key={cand.id}
+                      className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-xs"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                          {cand.title}
+                        </p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                          {formatCurrency(cand.amount)} • {cand.dueRelativeLabel || new Date(cand.due_date + "T00:00:00").toLocaleDateString("pt-BR")}
+                        </p>
+                      </div>
+
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="primary"
+                        onClick={() => setSelectedCommitmentToSettle(cand)}
+                        className="rounded-xl text-xs font-bold h-8 px-3 whitespace-nowrap self-end sm:self-center shrink-0 min-h-[36px]"
+                      >
+                        {flowType === "EXPENSE" ? "Registrar pagamento deste compromisso" : "Registrar recebimento deste compromisso"}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-1 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setDismissedSuggestions(true)}
+                    className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                  >
+                    Continuar como lançamento avulso
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* 4. Category Selector (Only for Expense & Income) */}
           {flowType !== "TRANSFER" && (
@@ -581,6 +692,19 @@ function NewTransactionInner({
         onCreated={(newId) => {
           fetchDependencies();
           setCategoryId(newId);
+        }}
+      />
+
+      {/* Settle Commitment Submodal */}
+      <SettleCommitmentModal
+        isOpen={Boolean(selectedCommitmentToSettle)}
+        onClose={() => setSelectedCommitmentToSettle(null)}
+        commitment={selectedCommitmentToSettle}
+        accounts={accounts}
+        onSettled={() => {
+          setSelectedCommitmentToSettle(null);
+          if (onSuccess) onSuccess();
+          onClose();
         }}
       />
     </>

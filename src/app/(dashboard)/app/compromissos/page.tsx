@@ -136,7 +136,7 @@ export default function CompromissosPage() {
               </button>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              O que você precisa pagar ou receber.
+              Contas e valores previstos para o futuro.
             </p>
           </div>
 
@@ -159,10 +159,15 @@ export default function CompromissosPage() {
               className="text-xs font-bold rounded-2xl flex items-center justify-center gap-1.5 shadow-md shadow-teal-500/10 min-h-[44px] px-3"
             >
               <Plus className="w-4 h-4 shrink-0" />
-              <span className="hidden sm:inline truncate">+ Novo compromisso</span>
-              <span className="sm:hidden truncate">+ Novo</span>
+              <span className="hidden sm:inline truncate">+ Agendar compromisso</span>
+              <span className="sm:hidden truncate">+ Agendar</span>
             </Button>
           </div>
+        </div>
+
+        {/* Orientation Hint */}
+        <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200/60 dark:border-teal-900/40 text-xs text-teal-800 dark:text-teal-300">
+          <span>💡 Aqui ficam contas e valores que ainda vão acontecer.</span>
         </div>
 
         {/* Top Summary Cards & Projected Balance */}

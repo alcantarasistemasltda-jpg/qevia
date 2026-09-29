@@ -184,7 +184,13 @@ export default function DashboardPage() {
                   <CreditCardsWidget creditCards={currentData.creditCards} />
 
                   {/* 8. Próximos Compromissos */}
-                  <CommitmentsWidget commitments={currentData.nextCommitments} />
+                  <CommitmentsWidget
+                    commitments={currentData.nextCommitments}
+                    accounts={currentData.accounts}
+                    onCommitmentSettled={() => {
+                      loadData();
+                    }}
+                  />
                 </div>
               </div>
             )}

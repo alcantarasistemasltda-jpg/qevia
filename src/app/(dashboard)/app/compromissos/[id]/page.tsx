@@ -342,7 +342,7 @@ export default function CommitmentDetailPage() {
                   )}
                 >
                   {isReceivable ? <ArrowUpRight className="w-4 h-4 mr-1" /> : <ArrowDownLeft className="w-4 h-4 mr-1" />}
-                  <span>{isReceivable ? "Receber agora" : "Pagar agora"}</span>
+                  <span>{isReceivable ? "Registrar Recebimento" : "Registrar Pagamento"}</span>
                 </Button>
               )}
             </div>

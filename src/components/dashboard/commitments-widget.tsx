@@ -1,19 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { CalendarClock, ChevronRight, ArrowDownLeft, ArrowUpRight } from "lucide-react";
-import type { FinancialCommitment } from "@/types/finance";
+import type { FinancialCommitment, Account } from "@/types/finance";
+import type { EnrichedCommitment } from "@/services/commitment.service";
 import { formatCurrency, formatDate } from "@/utils/formatters";
 import { useHideValues } from "@/hooks/use-hide-values";
+import { SettleCommitmentModal } from "@/components/commitments/settle-commitment-modal";
 import { cn } from "@/utils/cn";
 
 interface CommitmentsWidgetProps {
   commitments: FinancialCommitment[];
+  accounts?: Account[];
+  onCommitmentSettled?: () => void;
 }
 
-export function CommitmentsWidget({ commitments }: CommitmentsWidgetProps) {
+export function CommitmentsWidget({
+  commitments,
+  accounts = [],
+  onCommitmentSettled,
+}: CommitmentsWidgetProps) {
   const { isHidden: isHideValues } = useHideValues();
+  const [settlingCommitment, setSettlingCommitment] = useState<EnrichedCommitment | null>(null);
 
   if (commitments.length === 0) return null;
 
@@ -54,14 +63,17 @@ export function CommitmentsWidget({ commitments }: CommitmentsWidgetProps) {
           const isReceivable = item.type === "RECEIVABLE";
           const dueLabel = getDueLabel(item.due_date);
           const isDueToday = dueLabel === "Vence hoje";
+          const isOverdue = dueLabel.startsWith("Venceu");
 
           return (
-            <Link
+            <div
               key={item.id}
-              href={`/app/compromissos/${item.id}`}
-              className="flex items-center justify-between py-2.5 px-2 hover:bg-slate-50/70 dark:hover:bg-slate-800/50 rounded-2xl transition-colors group"
+              className="flex items-center justify-between py-2 px-2 hover:bg-slate-50/70 dark:hover:bg-slate-800/50 rounded-2xl transition-colors group"
             >
-              <div className="flex items-center gap-2.5 min-w-0">
+              <Link
+                href={`/app/compromissos/${item.id}`}
+                className="flex items-center gap-2.5 min-w-0 flex-1"
+              >
                 <div
                   className={cn(
                     "w-7 h-7 rounded-xl flex items-center justify-center text-white shrink-0",
@@ -74,14 +86,16 @@ export function CommitmentsWidget({ commitments }: CommitmentsWidgetProps) {
                     <ArrowDownLeft className="w-3.5 h-3.5" />
                   )}
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
                     {item.title}
                   </p>
                   <p
                     className={cn(
                       "text-[10px] font-semibold",
-                      isDueToday
+                      isOverdue
+                        ? "text-rose-600 dark:text-rose-400"
+                        : isDueToday
                         ? "text-amber-600 dark:text-amber-400"
                         : "text-teal-600 dark:text-teal-400"
                     )}
@@ -89,9 +103,9 @@ export function CommitmentsWidget({ commitments }: CommitmentsWidgetProps) {
                     {dueLabel}
                   </p>
                 </div>
-              </div>
+              </Link>
 
-              <div className="text-right shrink-0 ml-2">
+              <div className="flex items-center gap-2 shrink-0 ml-2">
                 <span
                   className={cn(
                     "text-xs font-bold",
@@ -104,11 +118,40 @@ export function CommitmentsWidget({ commitments }: CommitmentsWidgetProps) {
                     ? "R$ •••"
                     : `${isReceivable ? "+" : "-"} ${formatCurrency(item.amount)}`}
                 </span>
+
+                {/* Quick Settle Action Button */}
+                <button
+                  type="button"
+                  onClick={() => setSettlingCommitment(item as EnrichedCommitment)}
+                  title={isReceivable ? "Registrar Recebimento" : "Registrar Pagamento"}
+                  className={cn(
+                    "px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition-all active:scale-95 shadow-2xs flex items-center gap-1 shrink-0 min-h-[36px]",
+                    isReceivable
+                      ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-900/60 border border-emerald-200/60 dark:border-emerald-800/60"
+                      : "bg-slate-100 text-slate-800 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700/80"
+                  )}
+                >
+                  {isReceivable ? "Receber" : "Pagar"}
+                </button>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>
+
+      {/* Settle Modal for Quick Action */}
+      {settlingCommitment && (
+        <SettleCommitmentModal
+          isOpen={Boolean(settlingCommitment)}
+          onClose={() => setSettlingCommitment(null)}
+          commitment={settlingCommitment}
+          accounts={accounts}
+          onSettled={() => {
+            setSettlingCommitment(null);
+            if (onCommitmentSettled) onCommitmentSettled();
+          }}
+        />
+      )}
     </div>
   );
 }

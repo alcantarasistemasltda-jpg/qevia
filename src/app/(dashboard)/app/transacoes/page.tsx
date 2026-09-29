@@ -388,10 +388,15 @@ export default function TransacoesPage() {
 
   return (
     <AppShell
-      title="Transações"
-      subtitle="Extrato e controle de movimentações"
+      title="Lançamentos"
+      subtitle="Entradas e saídas que já aconteceram."
     >
       <div className="space-y-4 pb-20">
+        {/* Orientation Hint */}
+        <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200/60 dark:border-teal-900/40 text-xs text-teal-800 dark:text-teal-300">
+          <span>💡 Aqui ficam as movimentações que já aconteceram.</span>
+        </div>
+
         {/* Actions Bar (Search, Filters, New Transaction) */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -486,24 +491,24 @@ export default function TransacoesPage() {
         {isLoading ? (
           <div className="py-16 flex flex-col items-center justify-center gap-3 text-slate-400">
             <Loader2 className="w-8 h-8 animate-spin text-teal-500" />
-            <p className="text-xs font-medium">Carregando transações...</p>
+            <p className="text-xs font-medium">Carregando lançamentos...</p>
           </div>
         ) : transactions.length === 0 ? (
           <div className="py-8">
             {activeFiltersCount > 0 || debouncedSearch ? (
               <EmptyState
                 icon={Search}
-                title="Nenhuma transação encontrada"
-                description="Não encontramos nenhum lançamento correspondente aos filtros e termos de busca aplicados."
+                title="Nenhum lançamento encontrado"
+                description="Não encontramos nenhuma movimentação correspondente aos filtros e termos de busca aplicados."
                 actionLabel="Limpar filtros"
                 onAction={handleResetFilters}
               />
             ) : (
               <EmptyState
                 icon={ReceiptText}
-                title="Nenhuma movimentação registrada"
-                description="Você ainda não possui transações registradas para este período. Comece adicionando sua primeira receita ou despesa."
-                actionLabel="Registrar lançamento"
+                title="Nenhuma movimentação realizada neste período."
+                description="Você ainda não possui lançamentos registrados para este período. Comece adicionando sua primeira receita ou despesa."
+                actionLabel="Novo lançamento"
                 onAction={handleOpenCreate}
               />
             )}

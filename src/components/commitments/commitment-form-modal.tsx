@@ -157,10 +157,12 @@ function CommitmentFormModalContent({
       <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200/80 dark:border-slate-800/80">
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white">
-            {editingCommitment ? "Editar Compromisso" : "Novo Compromisso"}
+            {editingCommitment ? "Editar Compromisso" : "Agendar Compromisso"}
           </h3>
           <p className="text-xs text-slate-500">
-            {type === "PAYABLE" ? "Conta a pagar" : "Valor a receber"}
+            {editingCommitment
+              ? (type === "PAYABLE" ? "Conta a pagar" : "Valor a receber")
+              : "Registre uma conta a pagar ou um valor a receber."}
           </p>
         </div>
 

@@ -460,7 +460,7 @@ export function CommitmentList({
           </div>
           <div className="max-w-xs mx-auto space-y-1">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-              Nenhum compromisso encontrado
+              Nenhuma conta a pagar ou a receber prevista.
             </h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Não há contas a pagar ou valores a receber para os filtros selecionados.
@@ -472,7 +472,7 @@ export function CommitmentList({
             onClick={onNewCommitment}
             className="font-semibold text-xs rounded-2xl"
           >
-            + Criar primeiro compromisso
+            + Agendar primeiro compromisso
           </Button>
         </div>
       ) : (

@@ -212,9 +212,9 @@ function SettleModalContent({
             {isSubmitting ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : isReceivable ? (
-              `Receber ${format(commitment.amount)}`
+              `Registrar Recebimento (${format(commitment.amount)})`
             ) : (
-              `Pagar ${format(commitment.amount)}`
+              `Registrar Pagamento (${format(commitment.amount)})`
             )}
           </Button>
         </div>
