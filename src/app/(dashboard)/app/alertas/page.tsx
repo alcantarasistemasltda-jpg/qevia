@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import {
-  BellRing,
   AlertTriangle,
   AlertCircle,
   Info,
@@ -15,6 +14,7 @@ import {
   Calendar,
   Check,
 } from "lucide-react";
+import { AppShell } from "@/components/layout/app-shell";
 import { AlertService, AlertMetadata } from "@/services/alert.service";
 import { AlertEngineService, SmartInsight } from "@/services/alert-engine.service";
 import { useAuth } from "@/hooks/use-auth";
@@ -24,36 +24,62 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/utils/cn";
 
 export default function AlertsCenterPage() {
-  const { user } = useAuth();
+  const { user, isLoading: isAuthLoading } = useAuth();
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [insights, setInsights] = useState<SmartInsight[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filterMode, setFilterMode] = useState<"ALL" | "UNREAD" | "CRITICAL">("ALL");
 
-  useEffect(() => {
-    let isMounted = true;
-    if (user) {
-      AlertEngineService.evaluateUserAlerts(user.id)
-        .then(() =>
-          Promise.all([
-            AlertService.list(),
-            AlertEngineService.generateSmartInsights(user.id),
-          ])
-        )
-        .then(([listRes, insightsRes]) => {
-          if (!isMounted) return;
-          if (listRes.data) setAlerts(listRes.data);
-          if (insightsRes) setInsights(insightsRes);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          if (isMounted) setIsLoading(false);
-        });
+  const fetchAlertsData = useCallback(async () => {
+    if (!user) {
+      if (!isAuthLoading) {
+        setIsLoading(false);
+      }
+      return;
     }
-    return () => {
-      isMounted = false;
+
+    setIsLoading(true);
+    try {
+      try {
+        await AlertEngineService.evaluateUserAlerts(user.id);
+      } catch {
+        // Ignora erro em evaluateUserAlerts para não bloquear listagem
+      }
+
+      const [listRes, insightsRes] = await Promise.all([
+        AlertService.list(),
+        AlertEngineService.generateSmartInsights(user.id).catch(() => []),
+      ]);
+
+      if (listRes.data) setAlerts(listRes.data);
+      if (insightsRes) setInsights(insightsRes);
+    } catch {
+      // Fallback
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user, isAuthLoading]);
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    const run = async () => {
+      if (!isSubscribed) return;
+      if (!isAuthLoading) {
+        if (user) {
+          await fetchAlertsData();
+        } else {
+          setIsLoading(false);
+        }
+      }
     };
-  }, [user]);
+
+    run();
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [user, isAuthLoading, fetchAlertsData]);
 
   const handleMarkAsRead = async (id: string) => {
     await AlertService.markAsRead(id);
@@ -244,21 +270,10 @@ export default function AlertsCenterPage() {
   };
 
   return (
-    <div className="space-y-6 pb-20 md:pb-8">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <BellRing className="w-6 h-6 text-teal-600 dark:text-teal-400" />
-            Alertas
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Tudo o que merece sua atenção financeira.
-          </p>
-        </div>
-
+    <AppShell title="Alertas" subtitle="Tudo o que merece sua atenção financeira">
+      <div className="space-y-6 pb-20 md:pb-8">
         {/* Actions */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center justify-end gap-2 flex-wrap">
           {unreadCount > 0 && (
             <Button
               type="button"
@@ -457,6 +472,6 @@ export default function AlertsCenterPage() {
           </div>
         )}
       </div>
-    </div>
+    </AppShell>
   );
 }
