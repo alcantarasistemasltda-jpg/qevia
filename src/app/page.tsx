@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -87,7 +88,7 @@ export default function LandingPage() {
         {/* VERSÃO DESKTOP (≥ 1024px / lg) — Preservada 100%          */}
         {/* ========================================================= */}
         <section className="hidden lg:flex relative w-full min-h-[88vh] items-center overflow-hidden bg-[#FAFBFD] dark:bg-slate-950">
-          {/* Camada de Background: Fotografia Lifestyle */}
+          {/* Camada de Background: Fotografia Lifestyle Desktop */}
           <div
             className="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-[center_right] pointer-events-none"
             style={{ backgroundImage: `url('/hero-person.jpg')` }}
@@ -146,7 +147,7 @@ export default function LandingPage() {
                 </a>
               </div>
 
-              {/* Micro-Benefícios */}
+              {/* Micro-Benefícios Desktop */}
               <div className="pt-6 w-full flex flex-wrap gap-7 text-sm">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#EBF7F5] dark:bg-teal-950/60 text-[#0F766E] dark:text-teal-400 flex items-center justify-center shrink-0">
@@ -195,10 +196,10 @@ export default function LandingPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* VERSÃO MOBILE (< 1024px) — Reset Completo & Limpo         */}
+        {/* VERSÃO MOBILE (< 1024px) — Composição Própria Limpa       */}
         {/* ========================================================= */}
         <section className="lg:hidden w-full bg-[#FAFBFD] dark:bg-slate-950 px-4 pt-6 pb-12">
-          <div className="max-w-lg mx-auto flex flex-col items-start text-left space-y-5">
+          <div className="max-w-lg mx-auto flex flex-col items-start text-left space-y-4">
             {/* 1. Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] font-semibold tracking-wider uppercase shadow-2xs">
               <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
@@ -249,51 +250,42 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* 6. Benefícios Compactos (Sem borda, sem fundo, sem sombra, sem caixas) */}
-            <div className="pt-2 w-full grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            {/* 6. Benefícios Compactos (Sem bordas, sem fundos, sem sombras, sem caixas) */}
+            <div className="pt-2 pb-1 w-full flex flex-col gap-2.5 text-xs text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2.5">
                 <BarChart3 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
-                <div>
-                  <p className="font-semibold text-slate-900 dark:text-white leading-tight">
-                    Mais controle
-                  </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    das suas finanças
-                  </p>
-                </div>
+                <span>
+                  <strong className="font-semibold text-slate-900 dark:text-white">Mais controle</strong> das suas finanças
+                </span>
               </div>
 
               <div className="flex items-center gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <div>
-                  <p className="font-semibold text-slate-900 dark:text-white leading-tight">
-                    Seus dados
-                  </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    sempre seguros
-                  </p>
-                </div>
+                <span>
+                  <strong className="font-semibold text-slate-900 dark:text-white">Seus dados</strong> sempre seguros
+                </span>
               </div>
 
               <div className="flex items-center gap-2.5">
                 <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                <div>
-                  <p className="font-semibold text-slate-900 dark:text-white leading-tight">
-                    Comece em minutos
-                  </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    e veja a diferença
-                  </p>
-                </div>
+                <span>
+                  <strong className="font-semibold text-slate-900 dark:text-white">Comece em minutos</strong> e veja a diferença
+                </span>
               </div>
             </div>
 
             {/* 7. Fotografia Lifestyle em Destaque (~4:3, sem texto sobreposto) */}
-            <div className="w-full pt-3">
-              <div
-                className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 dark:border-slate-800 bg-cover bg-[right_center] sm:bg-[center_right]"
-                style={{ backgroundImage: `url('/hero-person.jpg')` }}
-              />
+            <div className="w-full pt-2">
+              <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+                <Image
+                  src="/hero-person.jpg"
+                  alt="QEVIA — Gestão Financeira Inteligente"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 540px"
+                  className="object-cover object-[82%_center]"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </section>
