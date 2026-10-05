@@ -81,125 +81,115 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* 2. Hero Principal */}
+      {/* 2. Hero Principal — Seção Única Contínua (Mobile & Desktop) */}
       <main className="flex-1 flex flex-col justify-center">
-        <section className="relative w-full min-h-[750px] lg:min-h-[88vh] flex items-center overflow-hidden bg-[#FAFBFD] dark:bg-slate-950">
-          {/* Camada de Background Exclusiva para Desktop (≥ 1024px) */}
+        <section className="relative w-full min-h-[850px] sm:min-h-[880px] lg:min-h-[88vh] flex items-start lg:items-center overflow-hidden bg-[#FAFBFD] dark:bg-slate-950">
+          {/* Camada de Background: Fotografia Lifestyle Integrada */}
           <div
-            className="hidden lg:block absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-[center_right] pointer-events-none"
+            className="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-[center_bottom_0px] sm:bg-[center_bottom_20px] lg:bg-[center_right] pointer-events-none"
             style={{ backgroundImage: `url('/hero-person.jpg')` }}
           />
 
-          {/* Container Principal */}
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              
-              {/* Coluna Esquerda: Bloco Textual + CTAs + Benefícios */}
-              <div className="lg:col-span-7 xl:col-span-6 flex flex-col items-start text-left space-y-5 sm:space-y-6 lg:space-y-7">
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] sm:text-xs font-semibold tracking-wider uppercase shadow-2xs">
-                  <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
-                  <span>FINANÇAS PESSOAIS SEM COMPLICAÇÃO</span>
+          {/* Transição suave vertical no mobile: texto nítido no topo e fotografia revelada organicamente na base */}
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-[#FAFBFD] via-[#FAFBFD]/90 via-48% to-transparent dark:from-slate-950 dark:via-slate-950/90 dark:via-48% lg:hidden pointer-events-none" />
+
+          {/* Container Principal do Hero */}
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-20 pb-[380px] sm:pb-[420px] lg:pb-20 w-full">
+            <div className="max-w-xl lg:max-w-2xl flex flex-col items-start text-left space-y-5 sm:space-y-6 lg:space-y-7">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] sm:text-xs font-semibold tracking-wider uppercase shadow-2xs backdrop-blur-xs">
+                <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
+                <span>FINANÇAS PESSOAIS SEM COMPLICAÇÃO</span>
+              </div>
+
+              {/* Título Principal */}
+              <h1 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.12]">
+                Seu dinheiro.
+                <br />
+                Sob seu{" "}
+                <span className="text-[#0284C7] dark:text-cyan-400">
+                  controle.
+                </span>
+              </h1>
+
+              {/* Descrição */}
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-lg leading-relaxed font-normal">
+                Organize suas contas, cartões e gastos em um só lugar. Tenha uma
+                visão clara da sua vida financeira e tome decisões melhores todos os
+                meses.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto">
+                <Link href={ROUTES.auth.register} className="w-full sm:w-auto">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-[#0B132B] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 rounded-2xl px-6 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base font-semibold shadow-md shadow-slate-900/10 transition-all group justify-center"
+                    rightIcon={
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    }
+                  >
+                    Começar gratuitamente
+                  </Button>
+                </Link>
+                <a href="#recursos" className="w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full sm:w-auto rounded-2xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 px-5 sm:px-6 py-3 sm:py-3.5 text-sm sm:text-base font-medium shadow-2xs justify-center"
+                    leftIcon={
+                      <Play className="w-4 h-4 fill-slate-700 text-slate-700 dark:fill-slate-200 dark:text-slate-200" />
+                    }
+                  >
+                    Ver como funciona
+                  </Button>
+                </a>
+              </div>
+
+              {/* Micro-Benefícios */}
+              <div className="pt-4 sm:pt-6 w-full grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-5 text-xs sm:text-sm">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[#EBF7F5] dark:bg-teal-950/60 text-[#0F766E] dark:text-teal-400 flex items-center justify-center shrink-0">
+                    <BarChart3 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 dark:text-white leading-tight">
+                      Mais controle
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      das suas finanças
+                    </p>
+                  </div>
                 </div>
 
-                {/* Título Principal */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.12]">
-                  Seu dinheiro.
-                  <br />
-                  Sob seu{" "}
-                  <span className="text-[#0284C7] dark:text-cyan-400">
-                    controle.
-                  </span>
-                </h1>
-
-                {/* Descrição */}
-                <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-lg leading-relaxed font-normal">
-                  Organize suas contas, cartões e gastos em um só lugar. Tenha uma
-                  visão clara da sua vida financeira e tome decisões melhores todos os
-                  meses.
-                </p>
-
-                {/* CTAs */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto">
-                  <Link href={ROUTES.auth.register} className="w-full sm:w-auto">
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto bg-[#0B132B] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 rounded-2xl px-6 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base font-semibold shadow-md shadow-slate-900/10 transition-all group justify-center"
-                      rightIcon={
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                      }
-                    >
-                      Começar gratuitamente
-                    </Button>
-                  </Link>
-                  <a href="#recursos" className="w-full sm:w-auto">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="w-full sm:w-auto rounded-2xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 px-5 sm:px-6 py-3 sm:py-3.5 text-sm sm:text-base font-medium shadow-2xs justify-center"
-                      leftIcon={
-                        <Play className="w-4 h-4 fill-slate-700 text-slate-700 dark:fill-slate-200 dark:text-slate-200" />
-                      }
-                    >
-                      Ver como funciona
-                    </Button>
-                  </a>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[#EBF5FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-400 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 dark:text-white leading-tight">
+                      Seus dados
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      sempre seguros
+                    </p>
+                  </div>
                 </div>
 
-                {/* Micro-Benefícios */}
-                <div className="pt-4 sm:pt-6 w-full grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-5 text-xs sm:text-sm">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#EBF7F5] dark:bg-teal-950/60 text-[#0F766E] dark:text-teal-400 flex items-center justify-center shrink-0">
-                      <BarChart3 className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white leading-tight">
-                        Mais controle
-                      </p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                        das suas finanças
-                      </p>
-                    </div>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[#FFF7ED] dark:bg-amber-950/60 text-[#EA580C] dark:text-amber-400 flex items-center justify-center shrink-0">
+                    <Zap className="w-4 h-4" />
                   </div>
-
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#EBF5FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-400 flex items-center justify-center shrink-0">
-                      <ShieldCheck className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white leading-tight">
-                        Seus dados
-                      </p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                        sempre seguros
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#FFF7ED] dark:bg-amber-950/60 text-[#EA580C] dark:text-amber-400 flex items-center justify-center shrink-0">
-                      <Zap className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white leading-tight">
-                        Comece em minutos
-                      </p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                        e veja a diferença
-                      </p>
-                    </div>
+                  <div>
+                    <p className="font-bold text-slate-900 dark:text-white leading-tight">
+                      Comece em minutos
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      e veja a diferença
+                    </p>
                   </div>
                 </div>
               </div>
-
-              {/* Área Visual Dedicada para Mobile / Tablet (< 1024px) */}
-              <div className="lg:hidden w-full pt-4 pb-2">
-                <div
-                  className="w-full max-w-md mx-auto h-[350px] sm:h-[440px] rounded-3xl overflow-hidden shadow-xl border border-slate-200/80 dark:border-slate-800 bg-cover bg-[center_right] sm:bg-[right_center]"
-                  style={{ backgroundImage: `url('/hero-person.jpg')` }}
-                />
-              </div>
-
             </div>
           </div>
         </section>
