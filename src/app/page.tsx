@@ -142,38 +142,38 @@ export default function LandingPage() {
         </section>
 
         {/* ===================================================== */}
-        {/* MOBILE (< 1024px) — Reestruturação Definitiva         */}
+        {/* MOBILE (< 1024px) — Composição Definitiva             */}
         {/* ===================================================== */}
         <section className="lg:hidden w-full bg-[#FAFBFD] dark:bg-slate-950">
 
-          {/* Bloco 1 — Mensagem principal */}
-          <div className="px-5 pt-8 pb-0 flex flex-col items-start gap-4">
+          {/* ── Bloco 1: Badge + Título + Descrição ─────────────── */}
+          <div className="px-5 pt-8 pb-0">
             {/* Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] font-semibold tracking-widest uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-teal-500 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] font-semibold tracking-widest uppercase mb-4">
+              <Sparkles className="w-3 h-3 text-teal-500 shrink-0" />
               FINANÇAS PESSOAIS SEM COMPLICAÇÃO
             </div>
 
-            {/* Título — 36px fixo para presença visual real */}
-            <h1 style={{ fontSize: "36px", lineHeight: "1.12" }} className="font-extrabold tracking-tight text-slate-950 dark:text-white">
+            {/* Título — 36px, peso forte, presença real */}
+            <h1 className="text-[36px] font-extrabold tracking-tight text-slate-950 dark:text-white mb-4" style={{ lineHeight: 1.08 }}>
               Seu dinheiro.<br />
               Sob seu{" "}
               <span className="text-[#0284C7] dark:text-cyan-400">controle.</span>
             </h1>
 
-            {/* Descrição */}
-            <p className="text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-[340px]">
+            {/* Descrição — largura limitada a 340px para melhor leitura */}
+            <p className="text-[15px] text-slate-600 dark:text-slate-300 max-w-[340px] mb-0" style={{ lineHeight: 1.55 }}>
               Organize suas contas, cartões e gastos em um só lugar. Tenha uma visão
               clara da sua vida financeira e tome decisões melhores todos os meses.
             </p>
           </div>
 
-          {/* Bloco 2 — CTAs */}
+          {/* ── Bloco 2: CTAs ───────────────────────────────────── */}
           <div className="px-5 pt-5 pb-0 flex flex-col gap-3">
             <Link href={ROUTES.auth.register}>
               <Button
                 size="lg"
-                style={{ height: "52px" }}
+                style={{ height: "54px" }}
                 className="w-full bg-[#0B132B] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 rounded-2xl text-[15px] font-semibold shadow-md shadow-slate-900/10 transition-all group justify-center"
                 rightIcon={<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />}
               >
@@ -193,43 +193,42 @@ export default function LandingPage() {
             </a>
           </div>
 
-          {/* Bloco 3 — Benefícios: 3 colunas, sem cards, sem bordas, sem fundos */}
-          <div className="px-5 pt-6 pb-0 grid grid-cols-3 gap-x-3 gap-y-0">
-            <div className="flex flex-col items-start gap-1">
+          {/* ── Bloco 3: Benefícios — 3 cols, centralizados, sem cards ── */}
+          <div className="px-5 pt-7 pb-0 grid grid-cols-3 text-center">
+            <div className="flex flex-col items-center gap-1.5 px-1">
               <BarChart3 className="w-6 h-6 text-teal-600 dark:text-teal-400" />
-              <p className="mt-1 text-[13px] font-bold text-slate-900 dark:text-white leading-snug">Mais controle</p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">das suas finanças</p>
+              <p className="text-[12px] font-bold text-slate-900 dark:text-white leading-snug">Mais controle</p>
+              <p className="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug">das suas finanças</p>
             </div>
-            <div className="flex flex-col items-start gap-1">
+            <div className="flex flex-col items-center gap-1.5 px-1">
               <ShieldCheck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              <p className="mt-1 text-[13px] font-bold text-slate-900 dark:text-white leading-snug">Seus dados</p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">sempre seguros</p>
+              <p className="text-[12px] font-bold text-slate-900 dark:text-white leading-snug">Seus dados</p>
+              <p className="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug">sempre seguros</p>
             </div>
-            <div className="flex flex-col items-start gap-1">
+            <div className="flex flex-col items-center gap-1.5 px-1">
               <Zap className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-              <p className="mt-1 text-[13px] font-bold text-slate-900 dark:text-white leading-snug">Comece em minutos</p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">e veja a diferença</p>
+              <p className="text-[12px] font-bold text-slate-900 dark:text-white leading-snug">Comece em minutos</p>
+              <p className="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug">e veja a diferença</p>
             </div>
           </div>
 
-          {/* Bloco 4 — Fotografia Lifestyle: grande elemento visual */}
-          <div className="px-4 pt-5 pb-10">
-            <div
-              className="relative w-full overflow-hidden rounded-[24px] shadow-xl border border-slate-200/70 dark:border-slate-800 bg-slate-100 dark:bg-slate-900"
-              style={{ aspectRatio: "4/3" }}
-            >
+          {/* ── Bloco 4: Fotografia — Grande destaque visual ─────── */}
+          {/* altura fixa 380px garante presença em 375-430px */}
+          <div className="px-4 pt-6 pb-10">
+            <div className="relative w-full overflow-hidden rounded-[24px] shadow-xl border border-slate-200/70 dark:border-slate-800 bg-slate-100 dark:bg-slate-900" style={{ height: "380px" }}>
               <Image
                 src="/hero-person.jpg"
-                alt="QEVIA — Gestão Financeira Inteligente"
+                alt="Mulher organizando finanças com o QEVIA"
                 fill
                 sizes="(max-width: 768px) calc(100vw - 32px), 540px"
-                className="object-cover object-[82%_center]"
+                className="object-cover object-[72%_30%]"
                 priority
               />
             </div>
           </div>
 
         </section>
+
 
       </main>
 
