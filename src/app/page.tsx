@@ -195,17 +195,17 @@ export default function LandingPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* VERSÃO MOBILE (< 1024px) — Composição Própria & Limpa    */}
+        {/* VERSÃO MOBILE (< 1024px) — Reset Completo & Limpo         */}
         {/* ========================================================= */}
-        <section className="lg:hidden w-full bg-[#FAFBFD] dark:bg-slate-950 px-4 sm:px-6 pt-6 pb-12">
+        <section className="lg:hidden w-full bg-[#FAFBFD] dark:bg-slate-950 px-4 pt-6 pb-12">
           <div className="max-w-lg mx-auto flex flex-col items-start text-left space-y-5">
-            {/* Badge */}
+            {/* 1. Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] font-semibold tracking-wider uppercase shadow-2xs">
               <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
               <span>FINANÇAS PESSOAIS SEM COMPLICAÇÃO</span>
             </div>
 
-            {/* Título Principal */}
+            {/* 2. Título */}
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.14]">
               Seu dinheiro.
               <br />
@@ -215,14 +215,14 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            {/* Descrição */}
+            {/* 3. Descrição */}
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
               Organize suas contas, cartões e gastos em um só lugar. Tenha uma
               visão clara da sua vida financeira e tome decisões melhores todos os
               meses.
             </p>
 
-            {/* CTAs */}
+            {/* 4 & 5. CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full">
               <Link href={ROUTES.auth.register} className="w-full sm:w-auto">
                 <Button
@@ -249,14 +249,12 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* Benefícios (Organização Vertical e Compacta) */}
-            <div className="pt-2 w-full flex flex-col gap-2.5 text-xs">
-              <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 shadow-2xs">
-                <div className="w-7 h-7 rounded-lg bg-[#EBF7F5] dark:bg-teal-950/60 text-[#0F766E] dark:text-teal-400 flex items-center justify-center shrink-0">
-                  <BarChart3 className="w-3.5 h-3.5" />
-                </div>
+            {/* 6. Benefícios Compactos (Sem borda, sem fundo, sem sombra, sem caixas) */}
+            <div className="pt-2 w-full grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div className="flex items-center gap-2.5">
+                <BarChart3 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
                 <div>
-                  <p className="font-bold text-slate-900 dark:text-white leading-tight">
+                  <p className="font-semibold text-slate-900 dark:text-white leading-tight">
                     Mais controle
                   </p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -265,12 +263,10 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 shadow-2xs">
-                <div className="w-7 h-7 rounded-lg bg-[#EBF5FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-400 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                </div>
+              <div className="flex items-center gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                 <div>
-                  <p className="font-bold text-slate-900 dark:text-white leading-tight">
+                  <p className="font-semibold text-slate-900 dark:text-white leading-tight">
                     Seus dados
                   </p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -279,12 +275,10 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 shadow-2xs">
-                <div className="w-7 h-7 rounded-lg bg-[#FFF7ED] dark:bg-amber-950/60 text-[#EA580C] dark:text-amber-400 flex items-center justify-center shrink-0">
-                  <Zap className="w-3.5 h-3.5" />
-                </div>
+              <div className="flex items-center gap-2.5">
+                <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                 <div>
-                  <p className="font-bold text-slate-900 dark:text-white leading-tight">
+                  <p className="font-semibold text-slate-900 dark:text-white leading-tight">
                     Comece em minutos
                   </p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -294,10 +288,10 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Parte Visual: Fotografia Lifestyle + Cards Financeiros em Bloco Próprio */}
-            <div className="w-full pt-4">
+            {/* 7. Fotografia Lifestyle em Destaque (~4:3, sem texto sobreposto) */}
+            <div className="w-full pt-3">
               <div
-                className="w-full min-h-[380px] h-[380px] sm:h-[460px] rounded-[24px] overflow-hidden shadow-xl border border-slate-200/80 dark:border-slate-800 bg-cover bg-[right_center] sm:bg-[center_right]"
+                className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 dark:border-slate-800 bg-cover bg-[right_center] sm:bg-[center_right]"
                 style={{ backgroundImage: `url('/hero-person.jpg')` }}
               />
             </div>
