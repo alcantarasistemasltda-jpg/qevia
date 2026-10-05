@@ -18,7 +18,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#FAFBFD] dark:bg-slate-950 flex flex-col selection:bg-teal-500 selection:text-white font-sans overflow-x-hidden">
       {/* 1. Header Minimalista e Responsivo */}
       <header className="sticky top-0 z-40 w-full border-b border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md">
-        <div className="flex h-16 sm:h-18 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           {/* Logo QEVIA */}
           <div className="shrink-0">
             <Logo showTagline={false} size="sm" className="sm:hidden" />
@@ -33,30 +33,10 @@ export default function LandingPage() {
             >
               Início
             </Link>
-            <a
-              href="#recursos"
-              className="hover:text-slate-950 dark:hover:text-white transition-colors"
-            >
-              Recursos
-            </a>
-            <a
-              href="#planos"
-              className="hover:text-slate-950 dark:hover:text-white transition-colors"
-            >
-              Planos
-            </a>
-            <a
-              href="#depoimentos"
-              className="hover:text-slate-950 dark:hover:text-white transition-colors"
-            >
-              Depoimentos
-            </a>
-            <a
-              href="#perguntas"
-              className="hover:text-slate-950 dark:hover:text-white transition-colors"
-            >
-              Perguntas
-            </a>
+            <a href="#recursos" className="hover:text-slate-950 dark:hover:text-white transition-colors">Recursos</a>
+            <a href="#planos" className="hover:text-slate-950 dark:hover:text-white transition-colors">Planos</a>
+            <a href="#depoimentos" className="hover:text-slate-950 dark:hover:text-white transition-colors">Depoimentos</a>
+            <a href="#perguntas" className="hover:text-slate-950 dark:hover:text-white transition-colors">Perguntas</a>
           </nav>
 
           {/* Ações à Direita */}
@@ -82,53 +62,37 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* 2. Hero Principal */}
       <main className="flex-1 flex flex-col justify-center">
-        {/* ========================================================= */}
-        {/* VERSÃO DESKTOP (≥ 1024px / lg) — Preservada 100%          */}
-        {/* ========================================================= */}
+
+        {/* ===================================================== */}
+        {/* DESKTOP (≥ 1024px) — Preservado 100%                  */}
+        {/* ===================================================== */}
         <section className="hidden lg:flex relative w-full min-h-[88vh] items-center overflow-hidden bg-[#FAFBFD] dark:bg-slate-950">
-          {/* Camada de Background: Fotografia Lifestyle Desktop */}
           <div
             className="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-[center_right] pointer-events-none"
             style={{ backgroundImage: `url('/hero-person.jpg')` }}
           />
-
-          {/* Conteúdo do Hero Desktop */}
           <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20 w-full">
             <div className="max-w-xl lg:max-w-2xl flex flex-col items-start text-left space-y-7">
-              {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-xs font-semibold tracking-wider uppercase shadow-2xs">
                 <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
                 <span>FINANÇAS PESSOAIS SEM COMPLICAÇÃO</span>
               </div>
-
-              {/* Título Principal */}
               <h1 className="text-5xl lg:text-[3.5rem] font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.12]">
-                Seu dinheiro.
-                <br />
+                Seu dinheiro.<br />
                 Sob seu{" "}
-                <span className="text-[#0284C7] dark:text-cyan-400">
-                  controle.
-                </span>
+                <span className="text-[#0284C7] dark:text-cyan-400">controle.</span>
               </h1>
-
-              {/* Descrição */}
               <p className="text-lg text-slate-600 dark:text-slate-300 max-w-lg leading-relaxed font-normal">
                 Organize suas contas, cartões e gastos em um só lugar. Tenha uma
-                visão clara da sua vida financeira e tome decisões melhores todos os
-                meses.
+                visão clara da sua vida financeira e tome decisões melhores todos os meses.
               </p>
-
-              {/* CTAs */}
               <div className="flex items-center gap-3.5 pt-1">
                 <Link href={ROUTES.auth.register}>
                   <Button
                     size="lg"
                     className="bg-[#0B132B] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 rounded-2xl px-7 py-3.5 text-base font-semibold shadow-md shadow-slate-900/10 transition-all group"
-                    rightIcon={
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                    }
+                    rightIcon={<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />}
                   >
                     Começar gratuitamente
                   </Button>
@@ -138,56 +102,38 @@ export default function LandingPage() {
                     variant="outline"
                     size="lg"
                     className="rounded-2xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 px-6 py-3.5 text-base font-medium shadow-2xs"
-                    leftIcon={
-                      <Play className="w-4 h-4 fill-slate-700 text-slate-700 dark:fill-slate-200 dark:text-slate-200" />
-                    }
+                    leftIcon={<Play className="w-4 h-4 fill-slate-700 text-slate-700 dark:fill-slate-200 dark:text-slate-200" />}
                   >
                     Ver como funciona
                   </Button>
                 </a>
               </div>
-
-              {/* Micro-Benefícios Desktop */}
               <div className="pt-6 w-full flex flex-wrap gap-7 text-sm">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#EBF7F5] dark:bg-teal-950/60 text-[#0F766E] dark:text-teal-400 flex items-center justify-center shrink-0">
                     <BarChart3 className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900 dark:text-white leading-tight">
-                      Mais controle
-                    </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      das suas finanças
-                    </p>
+                    <p className="font-bold text-slate-900 dark:text-white leading-tight">Mais controle</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">das suas finanças</p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#EBF5FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-400 flex items-center justify-center shrink-0">
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900 dark:text-white leading-tight">
-                      Seus dados
-                    </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      sempre seguros
-                    </p>
+                    <p className="font-bold text-slate-900 dark:text-white leading-tight">Seus dados</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">sempre seguros</p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#FFF7ED] dark:bg-amber-950/60 text-[#EA580C] dark:text-amber-400 flex items-center justify-center shrink-0">
                     <Zap className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900 dark:text-white leading-tight">
-                      Comece em minutos
-                    </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      e veja a diferença
-                    </p>
+                    <p className="font-bold text-slate-900 dark:text-white leading-tight">Comece em minutos</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">e veja a diferença</p>
                   </div>
                 </div>
               </div>
@@ -195,100 +141,96 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ========================================================= */}
-        {/* VERSÃO MOBILE (< 1024px) — Composição Própria Limpa       */}
-        {/* ========================================================= */}
-        <section className="lg:hidden w-full bg-[#FAFBFD] dark:bg-slate-950 px-4 pt-6 pb-12">
-          <div className="max-w-lg mx-auto flex flex-col items-start text-left space-y-4">
-            {/* 1. Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] font-semibold tracking-wider uppercase shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
-              <span>FINANÇAS PESSOAIS SEM COMPLICAÇÃO</span>
+        {/* ===================================================== */}
+        {/* MOBILE (< 1024px) — Reestruturação Definitiva         */}
+        {/* ===================================================== */}
+        <section className="lg:hidden w-full bg-[#FAFBFD] dark:bg-slate-950">
+
+          {/* Bloco 1 — Mensagem principal */}
+          <div className="px-5 pt-8 pb-0 flex flex-col items-start gap-4">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EBF7F5] dark:bg-teal-950/60 border border-[#D1F0EC] dark:border-teal-800/60 text-[#0F766E] dark:text-teal-300 text-[11px] font-semibold tracking-widest uppercase">
+              <Sparkles className="w-3.5 h-3.5 text-teal-500 shrink-0" />
+              FINANÇAS PESSOAIS SEM COMPLICAÇÃO
             </div>
 
-            {/* 2. Título */}
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.14]">
-              Seu dinheiro.
-              <br />
+            {/* Título — 36px fixo para presença visual real */}
+            <h1 style={{ fontSize: "36px", lineHeight: "1.12" }} className="font-extrabold tracking-tight text-slate-950 dark:text-white">
+              Seu dinheiro.<br />
               Sob seu{" "}
-              <span className="text-[#0284C7] dark:text-cyan-400">
-                controle.
-              </span>
+              <span className="text-[#0284C7] dark:text-cyan-400">controle.</span>
             </h1>
 
-            {/* 3. Descrição */}
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-              Organize suas contas, cartões e gastos em um só lugar. Tenha uma
-              visão clara da sua vida financeira e tome decisões melhores todos os
-              meses.
+            {/* Descrição */}
+            <p className="text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-[340px]">
+              Organize suas contas, cartões e gastos em um só lugar. Tenha uma visão
+              clara da sua vida financeira e tome decisões melhores todos os meses.
             </p>
+          </div>
 
-            {/* 4 & 5. CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full">
-              <Link href={ROUTES.auth.register} className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="w-full bg-[#0B132B] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 rounded-2xl px-6 py-3.5 text-sm sm:text-base font-semibold shadow-md shadow-slate-900/10 transition-all group justify-center"
-                  rightIcon={
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                  }
-                >
-                  Começar gratuitamente
-                </Button>
-              </Link>
-              <a href="#recursos" className="w-full sm:w-auto">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 px-5 py-3.5 text-sm sm:text-base font-medium shadow-2xs justify-center"
-                  leftIcon={
-                    <Play className="w-4 h-4 fill-slate-700 text-slate-700 dark:fill-slate-200 dark:text-slate-200" />
-                  }
-                >
-                  Ver como funciona
-                </Button>
-              </a>
+          {/* Bloco 2 — CTAs */}
+          <div className="px-5 pt-5 pb-0 flex flex-col gap-3">
+            <Link href={ROUTES.auth.register}>
+              <Button
+                size="lg"
+                style={{ height: "52px" }}
+                className="w-full bg-[#0B132B] hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 rounded-2xl text-[15px] font-semibold shadow-md shadow-slate-900/10 transition-all group justify-center"
+                rightIcon={<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />}
+              >
+                Começar gratuitamente
+              </Button>
+            </Link>
+            <a href="#recursos">
+              <Button
+                variant="outline"
+                size="lg"
+                style={{ height: "52px" }}
+                className="w-full rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-[15px] font-medium shadow-2xs justify-center"
+                leftIcon={<Play className="w-4 h-4 fill-slate-600 text-slate-600 dark:fill-slate-300 dark:text-slate-300" />}
+              >
+                Ver como funciona
+              </Button>
+            </a>
+          </div>
+
+          {/* Bloco 3 — Benefícios: 3 colunas, sem cards, sem bordas, sem fundos */}
+          <div className="px-5 pt-6 pb-0 grid grid-cols-3 gap-x-3 gap-y-0">
+            <div className="flex flex-col items-start gap-1">
+              <BarChart3 className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+              <p className="mt-1 text-[13px] font-bold text-slate-900 dark:text-white leading-snug">Mais controle</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">das suas finanças</p>
             </div>
-
-            {/* 6. Benefícios Compactos (Sem bordas, sem fundos, sem sombras, sem caixas) */}
-            <div className="pt-2 pb-1 w-full flex flex-col gap-2.5 text-xs text-slate-600 dark:text-slate-400">
-              <div className="flex items-center gap-2.5">
-                <BarChart3 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
-                <span>
-                  <strong className="font-semibold text-slate-900 dark:text-white">Mais controle</strong> das suas finanças
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>
-                  <strong className="font-semibold text-slate-900 dark:text-white">Seus dados</strong> sempre seguros
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                <span>
-                  <strong className="font-semibold text-slate-900 dark:text-white">Comece em minutos</strong> e veja a diferença
-                </span>
-              </div>
+            <div className="flex flex-col items-start gap-1">
+              <ShieldCheck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <p className="mt-1 text-[13px] font-bold text-slate-900 dark:text-white leading-snug">Seus dados</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">sempre seguros</p>
             </div>
-
-            {/* 7. Fotografia Lifestyle em Destaque (~4:3, sem texto sobreposto) */}
-            <div className="w-full pt-2">
-              <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border border-slate-200/80 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
-                <Image
-                  src="/hero-person.jpg"
-                  alt="QEVIA — Gestão Financeira Inteligente"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 540px"
-                  className="object-cover object-[82%_center]"
-                  priority
-                />
-              </div>
+            <div className="flex flex-col items-start gap-1">
+              <Zap className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              <p className="mt-1 text-[13px] font-bold text-slate-900 dark:text-white leading-snug">Comece em minutos</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">e veja a diferença</p>
             </div>
           </div>
+
+          {/* Bloco 4 — Fotografia Lifestyle: grande elemento visual */}
+          <div className="px-4 pt-5 pb-10">
+            <div
+              className="relative w-full overflow-hidden rounded-[24px] shadow-xl border border-slate-200/70 dark:border-slate-800 bg-slate-100 dark:bg-slate-900"
+              style={{ aspectRatio: "4/3" }}
+            >
+              <Image
+                src="/hero-person.jpg"
+                alt="QEVIA — Gestão Financeira Inteligente"
+                fill
+                sizes="(max-width: 768px) calc(100vw - 32px), 540px"
+                className="object-cover object-[82%_center]"
+                priority
+              />
+            </div>
+          </div>
+
         </section>
+
       </main>
 
       {/* Footer */}
