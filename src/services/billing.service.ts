@@ -1083,4 +1083,71 @@ export class BillingService {
       return { success: false, error: message };
     }
   }
+
+  /**
+   * Server-side validation of billing environment configuration.
+   * Checks for the presence of all required variables without exposing secret values.
+   */
+  static validateConfig(): import("@/types/billing").BillingConfigValidationResult {
+    const requiredVariables = [
+      "NEXT_PUBLIC_SUPABASE_URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "ASAAS_ENVIRONMENT",
+      "ASAAS_API_KEY",
+      "ASAAS_WEBHOOK_ACCESS_TOKEN",
+      "BILLING_TRIAL_DAYS",
+    ];
+
+    const variables = requiredVariables.map((name) => ({
+      name,
+      configured: !!process.env[name] && process.env[name]!.trim().length > 0,
+    }));
+
+    const environment = process.env.ASAAS_ENVIRONMENT || "production";
+    const isValid = variables.every((v) => v.configured) && environment === "production";
+
+    return {
+      isValid,
+      environment,
+      variables,
+    };
+  }
+
+  /**
+   * Performs a non-mutating operational health check on billing components and connectivity.
+   */
+  static async getHealthStatus(): Promise<import("@/types/billing").BillingHealthCheckResult> {
+    let databaseStatus: "ok" | "fail" = "fail";
+
+    try {
+      const supabase = await createClient();
+      const { error: dbError } = await supabase.from("subscriptions").select("id").limit(1);
+      if (!dbError) {
+        databaseStatus = "ok";
+      }
+    } catch {
+      databaseStatus = "fail";
+    }
+
+    const asaasConfigured = !!process.env.ASAAS_API_KEY && process.env.ASAAS_API_KEY.trim().length > 0;
+    const webhookConfigured = !!process.env.ASAAS_WEBHOOK_ACCESS_TOKEN && process.env.ASAAS_WEBHOOK_ACCESS_TOKEN.trim().length > 0;
+    const environment = process.env.ASAAS_ENVIRONMENT || "production";
+
+    const billingStatus: "ok" | "fail" = databaseStatus === "ok" && asaasConfigured && webhookConfigured ? "ok" : "fail";
+    const overallStatus: "ok" | "degraded" | "error" =
+      billingStatus === "ok" ? "ok" : databaseStatus === "ok" ? "degraded" : "error";
+
+    return {
+      status: overallStatus,
+      application: "ok",
+      database: databaseStatus,
+      billing: billingStatus,
+      asaas: asaasConfigured ? "configured" : "not_configured",
+      asaasEnvironment: environment,
+      webhook: webhookConfigured ? "configured" : "not_configured",
+      timestamp: new Date().toISOString(),
+    };
+  }
 }
+

@@ -250,5 +250,22 @@ export interface AsaasUpdateSubscriptionPayload {
   status?: string;
 }
 
+export interface BillingConfigValidationResult {
+  isValid: boolean;
+  environment: string;
+  variables: {
+    name: string;
+    configured: boolean;
+  }[];
+}
 
-
+export interface BillingHealthCheckResult {
+  status: "ok" | "degraded" | "error";
+  application: "ok";
+  database: "ok" | "fail";
+  billing: "ok" | "fail";
+  asaas: "configured" | "not_configured";
+  asaasEnvironment: string;
+  webhook: "configured" | "not_configured";
+  timestamp: string;
+}
