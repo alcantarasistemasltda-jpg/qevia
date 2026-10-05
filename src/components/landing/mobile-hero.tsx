@@ -116,6 +116,17 @@ export function MobileHero() {
             className="object-cover object-[78%_center]"
             priority
           />
+
+          {/* Destaque / Mensagem no canto superior esquerdo (área iluminada) */}
+          <div className="absolute top-3.5 left-3.5 z-10 max-w-[155px] p-2.5 rounded-2xl bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-white/60 dark:border-slate-700/60 shadow-lg shadow-slate-950/5 flex flex-col gap-1 pointer-events-none">
+            <div className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-teal-700 dark:text-teal-300 uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+              Tempo Real
+            </div>
+            <p className="text-[12px] font-bold text-slate-900 dark:text-white leading-tight">
+              Tudo sincronizado na palma da mão
+            </p>
+          </div>
         </div>
       </div>
     </section>
